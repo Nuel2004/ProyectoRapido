@@ -18,6 +18,7 @@ public class Concesionario {
     static Scanner sc = new Scanner(System.in);
     static String carpetaSeleccionada = "";
     static List<Map<String, String>> datos = new ArrayList<>();
+
     public static void main(String[] args) throws Exception {
         menu();
         //seleccionarCarpeta();
@@ -47,9 +48,35 @@ public class Concesionario {
         throw new UnsupportedOperationException("Unimplemented method 'exportarCsv'");
     }
 
-    private static void leerXml(String carpetaSeleccionada2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'leerXml'");
+    // Este método lee un archivo XML.
+    // Cada elemento `<item>` se convierte en un mapa con claves y valores extraidos
+    // de las etiquetas.
+    public static void leerXml(String path) {
+        // Lee un archivo XML básico.
+        // Cada elemento <item> se convierte en un mapa con claves y valores extraidos
+        // de las etiquetas.
+        // Los datos se almacenan en la lista de mapas.
+        System.out.println("Leyendo archivo XML...");
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String linea;
+            Map<String, String> fila = null;
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+                if (linea.startsWith("<item>")) {
+                    fila = new HashMap<>();
+                } else if (linea.startsWith("</item>")) {
+                    if (fila != null)
+                        datos.add(fila);
+                } else if (fila != null && linea.startsWith("<") && linea.contains(">")) {
+                    String key = linea.substring(1, linea.indexOf(">"));
+                    String value = linea.substring(linea.indexOf(">") + 1, linea.lastIndexOf("<"));
+                    fila.put(key, value);
+                }
+            }
+            System.out.println("Archivo XML leído correctamente.");
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 
     private static void leerJson(String carpetaSeleccionada2) {
@@ -57,9 +84,31 @@ public class Concesionario {
         throw new UnsupportedOperationException("Unimplemented method 'leerJson'");
     }
 
-    private static void leerCsv(String carpetaSeleccionada2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'leerCsv'");
+    // Este metodo lee un archivo CSV.
+    // Los encabezados de la primera linea se usan como claves, y las siguientes
+    // lineas como valores.
+    public static void leerCsv(String path) {
+        // Lee un archivo CSV linea por linea.
+        // La primera linea se utiliza como encabezados y las siguientes como datos.
+        // Los datos se almacenan en la lista de mapas.
+        System.out.println("Leyendo archivo CSV...");
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String linea = br.readLine();
+            if (linea != null) {
+                String[] headers = linea.split(","); // Obtenemos los encabezados del CSV.
+                while ((linea = br.readLine()) != null) {
+                    String[] valores = linea.split(",");
+                    Map<String, String> fila = new HashMap<>();
+                    for (int i = 0; i < headers.length; i++) {
+                        fila.put(headers[i], valores[i]); // Asociamos cada valor con su encabezado.
+                    }
+                    datos.add(fila);
+                }
+            }
+            System.out.println("Archivo CSV leído correctamente.");
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 
     private static void obtenerExtension(String carpetaSeleccionada2) {
