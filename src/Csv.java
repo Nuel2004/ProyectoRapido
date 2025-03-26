@@ -16,12 +16,12 @@ public class Csv extends Archivos {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea = br.readLine();
             if (linea != null) {
-                String[] headers = linea.split(",");
+                String[] arrayEncabezado = linea.split(",");
                 while ((linea = br.readLine()) != null) {
                     String[] valores = linea.split(",");
                     Map<String, String> fila = new HashMap<>();
-                    for (int i = 0; i < headers.length; i++) {
-                        fila.put(headers[i], valores[i]);
+                    for (int i = 0; i < arrayEncabezado.length; i++) {
+                        fila.put(arrayEncabezado[i], valores[i]);
                     }
                     datos.add(fila);
                 }
@@ -37,8 +37,8 @@ public class Csv extends Archivos {
         System.out.println("Exportando a CSV...");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (!datos.isEmpty()) {
-                Set<String> headers = datos.get(0).keySet();
-                bw.write(String.join(",", headers));
+                Set<String> arrayEncabezado = datos.get(0).keySet();
+                bw.write(String.join(",", arrayEncabezado));
                 for (Map<String, String> fila : datos) {
                     bw.write(String.join(",", fila.values()));
                 }
