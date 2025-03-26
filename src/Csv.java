@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.BufferedWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +35,12 @@ public class Csv extends Archivos {
     @Override
     public void exportar(String path, List<Map<String, String>> datos) {
         System.out.println("Exportando a CSV...");
-        try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (!datos.isEmpty()) {
                 Set<String> headers = datos.get(0).keySet();
-                pw.println(String.join(",", headers));
+                bw.write(String.join(",", headers));
                 for (Map<String, String> fila : datos) {
-                    pw.println(String.join(",", fila.values()));
+                    bw.write(String.join(",", fila.values()));
                 }
             }
             System.out.println("Archivo CSV exportado correctamente.");
