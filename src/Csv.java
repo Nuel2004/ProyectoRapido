@@ -1,8 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-<<<<<<< HEAD
-import java.io.IOException;
-=======
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,22 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Csv extends Archivos {
->>>>>>> ramaJuanfran
-
-public class Csv implements Archivos{
     
     @Override
-<<<<<<< HEAD
-    public void aTextoPlano() {
-        String rutaArchivo = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                System.out.println(linea);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-=======
     public void leer(String path, List<Map<String, String>> datos) {
         System.out.println("Leyendo archivo CSV...");
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -46,16 +29,11 @@ public class Csv implements Archivos{
             System.out.println("Archivo CSV leído correctamente.");
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
->>>>>>> ramaJuanfran
         }
     }
 
 
     @Override
-<<<<<<< HEAD
-    public void darFormato() {
-        
-=======
     public void exportar(String path, List<Map<String, String>> datos) {
         System.out.println("Exportando a CSV...");
         try (PrintWriter pw = new PrintWriter(new FileWriter(path))) {
@@ -70,6 +48,5 @@ public class Csv implements Archivos{
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
->>>>>>> ramaJuanfran
     }
 }
