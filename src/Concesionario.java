@@ -16,8 +16,7 @@ public class Concesionario {
 
         while (true) {
             System.out.println("\nMenú:");
-            System.out.println(
-                    "Carpeta seleccionada: " + (carpetaSeleccionada.isEmpty() ? "Ninguna" : carpetaSeleccionada));
+            System.out.println("Carpeta seleccionada: " + (carpetaSeleccionada.isEmpty() ? "Ninguna" : carpetaSeleccionada));
             if (!carpetaSeleccionada.isEmpty()) {
                 System.out.println("Contenido de la carpeta:");
                 File carpeta = new File(carpetaSeleccionada);
@@ -25,8 +24,7 @@ public class Concesionario {
                     System.out.println("- " + archivo);
                 }
             }
-            System.out.println(
-                    "Fichero seleccionado: " + (ficheroSeleccionado.isEmpty() ? "Ninguno" : ficheroSeleccionado));
+            System.out.println("Fichero seleccionado: " + (ficheroSeleccionado.isEmpty() ? "Ninguno" : ficheroSeleccionado));
             System.out.println("\n1. Seleccionar carpeta");
             System.out.println("2. Leer fichero");
             System.out.println("3. Convertir a otro formato");
