@@ -14,24 +14,19 @@ public class Xml extends Archivos {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea;
             Map<String, String> coche = null;
-            String key = null;
-
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
-
                 if (linea.startsWith("<coche>")) {
                     coche = new HashMap<>();
                 } else if (linea.startsWith("</coche>")) {
                     if (coche != null) {
                         datos.add(coche);
-                        coche = null;
                     }
-                } else if (linea.startsWith("<") && linea.contains(">") && coche != null) {
-                    key = linea.substring(1, linea.indexOf(">"));
-                } else if (linea.startsWith("</") == false && coche != null && key != null) {
-                    String value = linea;
+                } else if (linea.startsWith("<") && linea.endsWith(">")) {
+                    String[] partes = linea.substring(1, linea.length() - 1).split(">");
+                    String key = partes[0].trim();
+                    String value = partes[1].trim();
                     coche.put(key, value);
-                    key = null;
                 }
             }
 
@@ -47,19 +42,13 @@ public class Xml extends Archivos {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             bw.write("<coches>\n");
-
             for (Map<String, String> coche : datos) {
-                bw.write("    <coche>\n");
+                bw.write("  <coche>\n");
                 for (Map.Entry<String, String> entry : coche.entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    value = value.replace("<", "&lt;").replace(">", "&gt;").replace("&", "&amp;")
-                            .replace("\"", "&quot;").replace("'", "&apos;");
-                    bw.write("        <" + key + ">" + value + "</" + key + ">\n");
+                    bw.write("    <" + entry.getKey() + ">" + entry.getValue() + "</" + entry.getKey() + ">\n");
                 }
-                bw.write("    </coche>\n");
+                bw.write("  </coche>\n");
             }
-
             bw.write("</coches>\n");
             System.out.println("Archivo XML exportado correctamente.");
         } catch (IOException e) {
