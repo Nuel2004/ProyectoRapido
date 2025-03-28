@@ -1,11 +1,14 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Csv implements Archivos{
-
+public class Csv extends Archivos{
     @Override
     public void aTextoPlano(String path, List<Map<String, String>> datos) {
         System.out.println("Leyendo archivo CSV...");
@@ -44,5 +47,7 @@ public class Csv implements Archivos{
             System.err.println("Error: " + e.getMessage());
         }
     }
+    
+    
     
 }
