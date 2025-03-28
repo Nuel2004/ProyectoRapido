@@ -12,7 +12,6 @@ public class Concesionario {
     static Archivos archivos;
 
     public static void main(String[] args) {
-        String ficheroSeleccionado = "";
         while (true) {
             System.out.println(menu());
             int opcion = sc.nextInt();
@@ -23,7 +22,7 @@ public class Concesionario {
                     seleccionarCarpeta();
                     break;
                 case 2:
-                    ficheroSeleccionado = leerFichero();
+                    leerFichero();
                     break;
                 case 3:
                     menuConversion();
