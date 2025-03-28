@@ -1,13 +1,27 @@
+<<<<<<< HEAD
 import java.io.*;
+=======
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+>>>>>>> ramadeveloper
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+<<<<<<< HEAD
 public class Csv implements Archivos{
 
     @Override
     public void aTextoPlano(String path, List<Map<String, String>> datos) {
+=======
+public class Csv extends Archivos{
+    @Override
+    public void leer(String path, List<Map<String, String>> datos) {
+>>>>>>> ramadeveloper
         System.out.println("Leyendo archivo CSV...");
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea = br.readLine();
@@ -29,7 +43,11 @@ public class Csv implements Archivos{
     }
 
     @Override
+<<<<<<< HEAD
     public void darFormato(String path, List<Map<String, String>> datos) {
+=======
+    public void exportar(String path, List<Map<String, String>> datos) {
+>>>>>>> ramadeveloper
         System.out.println("Exportando a CSV...");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (!datos.isEmpty()) {
@@ -45,4 +63,9 @@ public class Csv implements Archivos{
         }
     }
     
+<<<<<<< HEAD
+=======
+    
+    
+>>>>>>> ramadeveloper
 }
