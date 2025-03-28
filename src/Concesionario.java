@@ -151,6 +151,7 @@ public class Concesionario {
             return;
         }
         int opcion;
+        System.out.println("Introduce el nombre del archivo de salida (sin extensión): ");
         String nombreSalida = sc.nextLine();
         do{
             System.out.println(menuConversionDibujar());
