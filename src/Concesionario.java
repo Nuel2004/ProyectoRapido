@@ -4,7 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
-
+/**
+ * * Clase principal del programa que permite seleccionar una carpeta, leer un fichero y convertirlo a diferentes formatos.
+ * @author Rodas y Juanfran
+ * @version 1.0
+ */
 public class Concesionario {
     static Scanner sc = new Scanner(System.in);
     static String carpetaSeleccionada = "";
