@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Csv extends Archivos{
     @Override
-    public void leer(String path, List<Map<String, String>> datos) {
+    public void aTextoPlano(String path, List<Map<String, String>> datos) {
         System.out.println("Leyendo archivo CSV...");
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea = br.readLine();
@@ -32,7 +32,7 @@ public class Csv extends Archivos{
     }
 
     @Override
-    public void exportar(String path, List<Map<String, String>> datos) {
+    public void darFormato(String path, List<Map<String, String>> datos) {
         System.out.println("Exportando a CSV...");
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (!datos.isEmpty()) {

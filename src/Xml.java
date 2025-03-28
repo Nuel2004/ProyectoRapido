@@ -14,16 +14,22 @@ public class Xml extends Archivos {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea;
             Map<String, String> coche = null;
+<<<<<<< HEAD
             String key = null;
 
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
 
+=======
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+>>>>>>> 591fec4dbff165655f8582abc1a48baca569b352
                 if (linea.startsWith("<coche>")) {
                     coche = new HashMap<>();
                 } else if (linea.startsWith("</coche>")) {
                     if (coche != null) {
                         datos.add(coche);
+<<<<<<< HEAD
                         coche = null;
                     }
                 } else if (linea.startsWith("<") && linea.contains(">") && coche != null) {
@@ -32,6 +38,14 @@ public class Xml extends Archivos {
                     String value = linea;
                     coche.put(key, value);
                     key = null;
+=======
+                    }
+                } else if (linea.startsWith("<") && linea.endsWith(">")) {
+                    String[] partes = linea.substring(1, linea.length() - 1).split(">");
+                    String key = partes[0].trim();
+                    String value = partes[1].trim();
+                    coche.put(key, value);
+>>>>>>> 591fec4dbff165655f8582abc1a48baca569b352
                 }
             }
 
@@ -47,6 +61,7 @@ public class Xml extends Archivos {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             bw.write("<coches>\n");
+<<<<<<< HEAD
 
             for (Map<String, String> coche : datos) {
                 bw.write("    <coche>\n");
@@ -60,6 +75,15 @@ public class Xml extends Archivos {
                 bw.write("    </coche>\n");
             }
 
+=======
+            for (Map<String, String> coche : datos) {
+                bw.write("  <coche>\n");
+                for (Map.Entry<String, String> entry : coche.entrySet()) {
+                    bw.write("    <" + entry.getKey() + ">" + entry.getValue() + "</" + entry.getKey() + ">\n");
+                }
+                bw.write("  </coche>\n");
+            }
+>>>>>>> 591fec4dbff165655f8582abc1a48baca569b352
             bw.write("</coches>\n");
             System.out.println("Archivo XML exportado correctamente.");
         } catch (IOException e) {
