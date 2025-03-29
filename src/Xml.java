@@ -19,24 +19,19 @@ public class Xml extends Archivos {
         this.etiquetaAgrupacion = sc.nextLine();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea;
-            Map<String, String> coche = null;
-<<<<<<< HEAD
-
-            while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-
-=======
+            Map<String, String> etiqueta = null;
             
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
+                etiquetaAgrupacion = etiquetaAgrupacion.trim().toLowerCase();
                 
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
-                if (linea.startsWith("<coche>")) {
-                    coche = new HashMap<>();
-                } else if (linea.startsWith("</coche>")) {
-                    if (coche != null && !coche.isEmpty()) {
-                        datos.add(coche);
-                        coche = null;
+                
+                if (linea.startsWith("<" + etiquetaAgrupacion + ">")) {
+                    etiqueta = new HashMap<>();
+                } else if (linea.startsWith("</" + etiquetaAgrupacion + ">")) {
+                    if (etiqueta != null && !etiqueta.isEmpty()) {
+                        datos.add(etiqueta);
+                        etiqueta = null;
                     }
                 } else if (linea.startsWith("<") && linea.endsWith(">") && !linea.startsWith("</")) {
                     try {
@@ -66,26 +61,23 @@ public class Xml extends Archivos {
     @Override
     public void exportar(String path, List<Map<String, String>> datos, Scanner sc) {
         System.out.println("Exportando a XML...");
-<<<<<<< HEAD
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            StringBuilder xml = new StringBuilder();
-
-            xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            xml.append("<coches>\n");
-
-=======
-    
+        String extension = "src\\xml";
+        File carpeta = new File(extension);
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+        path = carpeta.getAbsolutePath() + File.separator + path;
+        System.out.println("Escribe la etiqueta de agrupacion del XML: ");
+        this.etiquetaAgrupacion = sc.nextLine();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             StringBuilder xml = new StringBuilder();
             
             xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             xml.append("<"+ this.etiquetaAgrupacion + "s>\n");
             
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
-            for (Map<String, String> coche : datos) {
-                xml.append("    <coche>\n");
-                for (Map.Entry<String, String> entry : coche.entrySet()) {
+            for (Map<String, String> etiquetaAgr : datos) {
+                xml.append("    <" + this.etiquetaAgrupacion + ">\n");
+                for (Map.Entry<String, String> entry : etiquetaAgr.entrySet()) {
                     String key = entry.getKey();
                     String value = escapeXML(entry.getValue());
                     xml.append("        <").append(key).append(">")
@@ -110,5 +102,5 @@ public class Xml extends Archivos {
                     .replace("\"", "&quot;")
                     .replace("'", "&apos;");
     }
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
+
 }
