@@ -144,7 +144,7 @@ public class Concesionario {
                 case 1 -> seleccionarCarpeta();
                 case 2 -> leerFichero();
                 case 3 -> menuConversion();
-                case 4 -> System.out.println("Saliendo del programa...");
+                case 4 -> System.out.println("Muchas gracias por depositar su confianza en nosotros, vuelva pronto.");
                 default -> System.out.println("Opcion no valida");
             }
         }while(opcion !=4);     
