@@ -1,16 +1,18 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Json extends Archivos {
 
     @Override
-    public void leer(String path, List<Map<String, String>> datos) {
+    public void leer(String path, List<Map<String, String>> datos, Scanner sc) {
         System.out.println("Leyendo archivo JSON...");
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             StringBuilder jsonBuilder = new StringBuilder();
@@ -40,8 +42,14 @@ public class Json extends Archivos {
     }
 
     @Override
-    public void exportar(String path, List<Map<String, String>> datos) {
+    public void exportar(String path, List<Map<String, String>> datos, Scanner sc) {
         System.out.println("Exportando a JSON...");
+        String extension = "src\\json";
+        File carpeta = new File(extension);
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+        path = carpeta.getAbsolutePath() + File.separator + path;
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             bw.write("[\n");
             for (int i = 0; i < datos.size(); i++) {
