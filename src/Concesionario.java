@@ -30,7 +30,7 @@ public class Concesionario {
                     seleccionarCarpeta();
                     break;
                 case 2:
-                    ficheroSeleccionado = leerFichero();
+                    leerFichero();
                     break;
                 case 3:
                     menuConversion();

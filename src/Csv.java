@@ -12,7 +12,11 @@ import java.util.Set;
 
 public class Csv extends Archivos {
     @Override
+<<<<<<< HEAD
     public void leer(String path, List<Map<String, String>> datos, Scanner sc) {
+=======
+    public void leer(String path, List<Map<String, String>> datos) {
+>>>>>>> ramadeveloper
         System.out.println("Leyendo archivo CSV...");
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea = br.readLine();
@@ -34,7 +38,11 @@ public class Csv extends Archivos {
     }
 
     @Override
+<<<<<<< HEAD
     public void exportar(String path, List<Map<String, String>> datos, Scanner sc) {
+=======
+    public void exportar(String path, List<Map<String, String>> datos) {
+>>>>>>> ramadeveloper
         System.out.println("Exportando a CSV...");
         String extension = "src\\csv";
         File carpeta = new File(extension);
