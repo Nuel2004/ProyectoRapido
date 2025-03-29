@@ -19,7 +19,6 @@ public class Xml extends Archivos {
         this.etiquetaAgrupacion = sc.nextLine();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linea;
-<<<<<<< HEAD
             Map<String, String> etiqueta = null;
             
             while ((linea = br.readLine()) != null) {
@@ -33,41 +32,13 @@ public class Xml extends Archivos {
                     if (etiqueta != null && !etiqueta.isEmpty()) {
                         datos.add(etiqueta);
                         etiqueta = null;
-=======
-            Map<String, String> coche = null;
-<<<<<<< HEAD
-
-            while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-
-=======
-            
-            while ((linea = br.readLine()) != null) {
-                linea = linea.trim();
-                
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
-                if (linea.startsWith("<coche>")) {
-                    coche = new HashMap<>();
-                } else if (linea.startsWith("</coche>")) {
-                    if (coche != null && !coche.isEmpty()) {
-                        datos.add(coche);
-                        coche = null;
->>>>>>> ramadeveloper
                     }
                 } else if (linea.startsWith("<") && linea.endsWith(">") && !linea.startsWith("</")) {
                     try {
                         String key = linea.substring(1, linea.indexOf('>'));
                         int inicioValor = linea.indexOf('>') + 1;
                         int finValor = linea.indexOf('<', inicioValor);
-<<<<<<< HEAD
                         
-=======
-<<<<<<< HEAD
-
-=======
-                        
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
->>>>>>> ramadeveloper
                         if (finValor > inicioValor) {
                             String value = linea.substring(inicioValor, finValor).trim();
                             if (!value.isEmpty() && etiqueta != null) {
@@ -90,7 +61,6 @@ public class Xml extends Archivos {
     @Override
     public void exportar(String path, List<Map<String, String>> datos, Scanner sc) {
         System.out.println("Exportando a XML...");
-<<<<<<< HEAD
         String extension = "src\\xml";
         File carpeta = new File(extension);
         if (!carpeta.exists()) {
@@ -99,15 +69,10 @@ public class Xml extends Archivos {
         path = carpeta.getAbsolutePath() + File.separator + path;
         System.out.println("Escribe la etiqueta de agrupacion del XML: ");
         this.etiquetaAgrupacion = sc.nextLine();
-=======
-<<<<<<< HEAD
-
->>>>>>> ramadeveloper
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             StringBuilder xml = new StringBuilder();
             
             xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-<<<<<<< HEAD
             xml.append("<"+ this.etiquetaAgrupacion + "s>\n");
             
             for (Map<String, String> etiquetaAgr : datos) {
@@ -117,27 +82,6 @@ public class Xml extends Archivos {
                     String value = escapeXML(entry.getValue());
                     xml.append("        <").append(key).append(">")
                     .append(value).append("</").append(key).append(">\n");
-=======
-            xml.append("<coches>\n");
-
-=======
-    
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            StringBuilder xml = new StringBuilder();
-            
-            xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            xml.append("<coches>\n");
-            
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
-            for (Map<String, String> coche : datos) {
-                xml.append("    <coche>\n");
-                for (Map.Entry<String, String> entry : coche.entrySet()) {
-                    String key = entry.getKey();
-                    String value = escapeXML(entry.getValue());
-                    xml.append("        <").append(key).append(">")
-<<<<<<< HEAD
-                            .append(value).append("</").append(key).append(">\n");
->>>>>>> ramadeveloper
                 }
                 xml.append("    </"+ this.etiquetaAgrupacion + ">\n");
             }
@@ -145,48 +89,18 @@ public class Xml extends Archivos {
             xml.append("</" + this.etiquetaAgrupacion + "s>\n");
             
             bw.write(xml.toString());
-<<<<<<< HEAD
             
-=======
-
-=======
-                    .append(value).append("</").append(key).append(">\n");
-                }
-                xml.append("    </coche>\n");
-            }
-            
-            xml.append("</coches>\n");
-            
-            bw.write(xml.toString());
-            
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
->>>>>>> ramadeveloper
             System.out.println("Archivo XML exportado correctamente.");
         } catch (IOException e) {
             System.err.println("Error al exportar XML: " + e.getMessage());
         }
     }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
->>>>>>> ramadeveloper
     private String escapeXML(String value) {
         return value.replace("&", "&amp;")
                     .replace("<", "&lt;")
                     .replace(">", "&gt;")
                     .replace("\"", "&quot;")
                     .replace("'", "&apos;");
-<<<<<<< HEAD
     }
 
-=======
-<<<<<<< HEAD
-    }
-=======
-    }
->>>>>>> 0cd261cccf31955a79956aecb09a58cec4af572d
->>>>>>> ramadeveloper
 }
