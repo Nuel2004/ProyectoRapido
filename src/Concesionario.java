@@ -10,7 +10,7 @@ import java.util.Scanner;
  * fichero y convertirlo a diferentes formatos.
  * 
  * @author Rodas y Juanfran
- * @version 1.0
+ * @version 1.123.0
  */
 public class Concesionario {
     static Scanner sc = new Scanner(System.in);
@@ -105,21 +105,21 @@ public class Concesionario {
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
-        String menu = tVerde + "------------------------------------------------------------\n"
-                + "|                                                          |\n"
-                + "|       " + fBlanco + "¿Qué desea hacer?" + reset + tVerde + "                                  |\n"
-                + "|                                                          |\n"
+        String menu = tVerde + "---------------------------------------------------------------\n"
+                + "|                                                             |\n"
+                + "|       " + fBlanco + "¿Qué desea hacer?" + reset + tVerde + "                                     |\n"
+                + "|                                                             |\n"
                 + "| Fichero seleccionado: " + (ficheroSeleccionado.isEmpty() ? "Ninguno" : ficheroSeleccionado)
-                + "                            |\n"
+                + "                               |\n"
                 + "| Carpeta seleccionada: " + (carpetaSeleccionada.isEmpty() ? "Ninguna" : carpetaSeleccionada)
-                + "                            |\n"
-                + "|                                                          |\n"
-                + "|----------------------------------------------------------|\n"
-                + "|      1. Seleccionar carpeta                              |\n"
-                + "|      2. Leer fichero                                     |\n"
-                + "|      3. Convertir                                        |\n"
-                + "|      4. Salir                                            |\n"
-                + "------------------------------------------------------------\n"
+                + "                               |\n"
+                + "|                                                             |\n"
+                + "|-------------------------------------------------------------|\n"
+                + "|      1. Seleccionar carpeta                                 |\n"
+                + "|      2. Leer fichero                                        |\n"
+                + "|      3. Convertir                                           |\n"
+                + "|      4. Salir                                               |\n"
+                + "---------------------------------------------------------------\n"
                 + "Elija una opción:\n" + reset;
         return menu;
     }

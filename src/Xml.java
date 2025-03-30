@@ -80,7 +80,7 @@ public class Xml extends Archivos {
                     String key = entry.getKey();
                     String value = escapeXML(entry.getValue());
                     xml.append("        <").append(key).append(">")
-                       .append(value).append("</").append(key).append(">\n");
+                    .append(value).append("</").append(key).append(">\n");
                 }
                 xml.append("    </"+ this.etiquetaAgrupacion + ">\n");
             }
