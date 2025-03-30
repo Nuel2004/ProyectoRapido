@@ -5,25 +5,22 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * * Clase principal del programa que permite seleccionar una carpeta, leer un
+ * fichero y convertirlo a diferentes formatos.
+ * 
+ * @author Rodas y Juanfran
+ * @version 1.0
+ */
 public class Concesionario {
     static Scanner sc = new Scanner(System.in);
+    static String ficheroSeleccionado = "";
     static String carpetaSeleccionada = "";
     static List<Map<String, String>> datos = new ArrayList<>();
     static Archivos archivos;
 
     public static void main(String[] args) {
-        String ficheroSeleccionado = "";
         while (true) {
-            System.out.println("\nMenú:");
-            System.out.println("Carpeta seleccionada: " + (carpetaSeleccionada.isEmpty() ? "Ninguna" : carpetaSeleccionada));
-            if (!carpetaSeleccionada.isEmpty()) {
-                System.out.println("Contenido de la carpeta:");
-                File carpeta = new File(carpetaSeleccionada);
-                for (String archivo : Objects.requireNonNull(carpeta.list())) {
-                    System.out.println("- " + archivo);
-                }
-            }
-            System.out.println("Fichero seleccionado: " + (ficheroSeleccionado.isEmpty() ? "Ninguno" : ficheroSeleccionado));
             System.out.println(menu());
             int opcion = sc.nextInt();
             sc.nextLine();
@@ -33,7 +30,7 @@ public class Concesionario {
                     seleccionarCarpeta();
                     break;
                 case 2:
-                    ficheroSeleccionado = leerFichero();
+                    leerFichero();
                     break;
                 case 3:
                     menuConversion();
@@ -53,7 +50,6 @@ public class Concesionario {
         File carpeta = new File(carpetaSeleccionada);
 
         if (carpeta.exists() && carpeta.isDirectory()) {
-            System.out.println("Carpeta seleccionada: " + carpetaSeleccionada);
             System.out.println("Contenido de la carpeta:");
             for (String archivo : Objects.requireNonNull(carpeta.list())) {
                 System.out.println("- " + archivo);
@@ -71,6 +67,7 @@ public class Concesionario {
         }
         System.out.print("Introduce el nombre del archivo a leer: ");
         String nombreArchivo = sc.nextLine();
+        ficheroSeleccionado = nombreArchivo;
         File archivo = new File(carpetaSeleccionada, nombreArchivo);
 
         if (archivo.exists() && archivo.isFile()) {
@@ -91,7 +88,7 @@ public class Concesionario {
                     System.err.println("Formato de archivo no soportado.");
                     return "";
             }
-            archivos.leer(archivo.getPath(), datos);
+            archivos.leer(archivo.getPath(), datos, sc);
             return nombreArchivo;
         } else {
             System.err.println("El archivo no existe en la carpeta seleccionada.");
@@ -99,119 +96,97 @@ public class Concesionario {
         }
     }
 
-    public static void convertirFormato() {
-        if (datos.isEmpty()) {
-            System.err.println("Primero debes leer un archivo.");
-            return;
-        }
-        System.out.println("Selecciona el formato de salida:");
-        System.out.println("1. CSV");
-        System.out.println("2. JSON");
-        System.out.println("3. XML");
-        int opcion = sc.nextInt();
-        sc.nextLine();
-        System.out.print("Introduce el nombre del archivo de salida (sin extensión): ");
-        String nombreSalida = sc.nextLine();
-
-        switch (opcion) {
-            case 1:
-                archivos = new Csv();
-                archivos.exportar(nombreSalida + ".csv", datos);
-                break;
-            case 2:
-                archivos = new Json();
-                archivos.exportar(nombreSalida + ".json", datos);
-                break;
-            case 3:
-                archivos = new Xml();
-                archivos.exportar(nombreSalida + ".xml", datos);
-                break;
-            default:
-                System.err.println("Opción no válida.");
-        }
-    }
-
     private static String obtenerExtension(String nombreArchivo) {
         int i = nombreArchivo.lastIndexOf('.');
         return (i > 0) ? nombreArchivo.substring(i + 1) : "";
     }
-    public static String menu(){
+
+    public static String menu() {
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
-        String menu= tVerde +"-----------------------------------\n"
-                            + "|                                 |\n"
-                            + "|       "+fBlanco+"¿Qué desea hacer?" + reset + tVerde+"         |\n"
-                            + "|                                 |\n"
-                            + "|---------------------------------|\n"
-                            + "|      1. Seleccionar carpeta     |\n" 
-                            + "|      2. Leer fichero            |\n"
-                            + "|      3. Convertir               |\n"
-                            + "|      4. Salir                   |\n"
-                            + "-----------------------------------\n"
-                            + "Elija una opción:\n" + reset;
+        String menu = tVerde + "------------------------------------------------------------\n"
+                + "|                                                          |\n"
+                + "|       " + fBlanco + "¿Qué desea hacer?" + reset + tVerde + "                                  |\n"
+                + "|                                                          |\n"
+                + "| Fichero seleccionado: " + (ficheroSeleccionado.isEmpty() ? "Ninguno" : ficheroSeleccionado)
+                + "                            |\n"
+                + "| Carpeta seleccionada: " + (carpetaSeleccionada.isEmpty() ? "Ninguna" : carpetaSeleccionada)
+                + "                            |\n"
+                + "|                                                          |\n"
+                + "|----------------------------------------------------------|\n"
+                + "|      1. Seleccionar carpeta                              |\n"
+                + "|      2. Leer fichero                                     |\n"
+                + "|      3. Convertir                                        |\n"
+                + "|      4. Salir                                            |\n"
+                + "------------------------------------------------------------\n"
+                + "Elija una opción:\n" + reset;
         return menu;
     }
-    public static String menuConversionDibujar(){
+
+    public static String menuConversionDibujar() {
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
-        String menu= tVerde +"-----------------------------------\n"
-                            + "|                                 |\n"
-                            + "|    "+fBlanco+"¿A que desea convertir?" + reset + tVerde+"      |\n"
-                            + "|                                 |\n"
-                            + "|---------------------------------|\n"
-                            + "|      1. Convertir a csv         |\n" 
-                            + "|      2. Convertir a json        |\n"
-                            + "|      3. Convertir a xml         |\n"
-                            + "|      4. Volver al menu          |\n"
-                            + "-----------------------------------\n"
-                            + "Elija una opción:\n" + reset;
+        String menu = tVerde + "-----------------------------------\n"
+                + "|                                 |\n"
+                + "|    " + fBlanco + "¿A que desea convertir?" + reset + tVerde + "      |\n"
+                + "|                                 |\n"
+                + "|---------------------------------|\n"
+                + "|      1. Convertir a csv         |\n"
+                + "|      2. Convertir a json        |\n"
+                + "|      3. Convertir a xml         |\n"
+                + "|      4. Volver al menu          |\n"
+                + "-----------------------------------\n"
+                + "Elija una opción:\n" + reset;
         return menu;
     }
-    public static void menuPrincipal(){
+
+    public static void menuPrincipal() {
         int opcion;
-        do{
+        do {
             System.out.println(menu());
             opcion = Integer.parseInt(sc.nextLine());
-            switch(opcion){
+            switch (opcion) {
                 case 1 -> seleccionarCarpeta();
                 case 2 -> leerFichero();
                 case 3 -> menuConversion();
-                case 4 -> System.out.println("Saliendo del programa...");
+                case 4 -> System.out.println("Muchas gracias por depositar su confianza en nosotros, vuelva pronto.");
                 default -> System.out.println("Opcion no valida");
             }
-        }while(opcion !=4);     
+        } while (opcion != 4);
     }
-    public static void menuConversion(){
+
+    public static void menuConversion() {
         if (datos.isEmpty()) {
             System.err.println("Primero debes leer un archivo.");
             return;
         }
         int opcion;
+        System.out.println("Introduce el nombre del archivo de salida (sin extensión): ");
         String nombreSalida = sc.nextLine();
-        do{
+        do {
             System.out.println(menuConversionDibujar());
             opcion = Integer.parseInt(sc.nextLine());
-            switch(opcion){
+            switch (opcion) {
                 case 1:
                     archivos = new Csv();
-                    archivos.exportar(nombreSalida + ".csv", datos);
-                break;
+                    archivos.exportar(nombreSalida + ".csv", datos, sc);
+                    break;
                 case 2:
                     archivos = new Json();
-                    archivos.exportar(nombreSalida + ".json", datos);
-                break;
+                    archivos.exportar(nombreSalida + ".json", datos, sc);
+                    break;
                 case 3:
                     archivos = new Xml();
-                    archivos.exportar(nombreSalida + ".xml", datos);
-                break;
+                    archivos.exportar(nombreSalida + ".xml", datos, sc);
+                    break;
                 case 4:
                     System.out.println("Saliendo del programa...");
-                break;
-                default: 
+                    break;
+                default:
                     System.out.println("Opcion no valida");
             }
-        }while(opcion !=4);     
+        } while (opcion != 4);
     }
 }
